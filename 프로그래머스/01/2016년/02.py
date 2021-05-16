@@ -5,7 +5,5 @@ def solution(a,b):
 
 
 
-   
-# print(solution(1,7)) 
 print(solution(5,24)) 
 print(solution(1,1))
