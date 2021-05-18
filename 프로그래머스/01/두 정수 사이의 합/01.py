@@ -5,5 +5,6 @@ def solution(a, b):
       answer+=i
    return answer
 
+
 print(solution(3, 5))
 print(solution(5, 3))
