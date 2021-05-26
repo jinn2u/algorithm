@@ -1,22 +1,30 @@
 def solution(dartResult):
-    bonus = {'S':1, 'D':2, 'T':3}
-    mid = []
-    ans = 0
-    for k,v in enumerate(dartResult):
-        if v == '*':
-            if k==2:
-                ans+=bonus[mid.pop()]*int(mid.pop())*2
+   pows = { "S":1,"D":2, "T":3 }
+   mid = []
+   num = ''
+   i = 0
+   for i in dartResult:
+      if i in pows:
+         mid.append(int(num)**pows[i])
+         num = ''
+      elif i in['*', '#']:
+         j = len(mid)-1
+         if i == '*':
+            if j == 0:
+               mid[j] = mid[j]*2
+               num=''
             else:
-                ans+=bonus[mid.pop()]*int(mid.pop())*2+bonus[mid.pop()]*int(mid.pop())*2 
-        else:
-            mid.append(v)
-    for _ in range(0,len(mid),2):
-        f = bonus[mid.pop()]
-        w = int(mid.pop())
-        ans+= w**f
-    return ans
+               mid[j-1] = mid[j-1]*2
+               mid[j] = mid[j]*2
+               num=''
+         else:
+            mid[j] = mid[j]* -1
+            num=''
+      else:
+         num+=i
+   return sum(mid)
+
+# print(solution("1S2D*3T"))
+print(solution("1D2S#10S"))
 
 
-               
-
-print(solution('1D2S0T'))
