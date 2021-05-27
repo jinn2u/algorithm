@@ -1,3 +1,5 @@
+import re
 def solution(s):
-   return s.lower.count('p') == s.lower.count('y')
-print(solution('pPoooyY'))
+   s.isdigit() and len(s) in [4,6]
+
+print(solution("123asd"))
