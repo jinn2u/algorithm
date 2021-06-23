@@ -1,15 +1,54 @@
 from collections import deque
 
-def solution(numbers, target):
-  answer = 0
-  queue = deque([(0, 0)]) # sum, level
-  while queue:
-    s, l = queue.popleft()
-    if l > len(numbers):
-        break
-    elif l == len(numbers) and s == target:
-      answer += 1
-    queue.append((s+numbers[l-1], l+1))
-    queue.append((s-numbers[l-1], l+1))
+def dfs(arr, start, visited, road):
+  # 방문을 하지 않은 경우
+  if not visited[start]:
+    road.append(start)
+    visited[start] = True
+    for i in arr[start]:
+      dfs(arr, i, visited, road)
 
-  return answer
+def bfs(arr, start, visited, road):
+  Q = deque()
+  Q.append(start)
+  while Q:
+    start = Q.popleft()
+    if not visited[start]:
+      road.append(start)
+      visited[start] = True
+      for i in arr[start]:
+        Q.append(i)
+
+d_visited = {}
+b_visited = {}
+arr = {}
+d_road = []
+b_road = []
+v,e,start = map(int, input().split())
+for i in range(e):
+  a,b = map(int, input().split())
+  arr.setdefault(a, []).append(b)
+  arr.setdefault(b, []).append(a)
+for i in arr:
+  arr[i].sort()
+  d_visited[i] = False
+  b_visited[i] = False
+  
+
+dfs(arr, start, d_visited, d_road)
+bfs(arr, start, b_visited,b_road)
+for i in d_visited:
+  if not d_visited[i]:
+    dfs(arr,i,d_visited, d_road)
+
+for i in d_visited:
+  if not d_visited[i]:
+    bfs(arr,i,b_visited, b_road)
+
+for i in d_road:
+  print(i, end=" ")
+print()
+for i in b_road:
+  print(i, end=' ')
+
+     
