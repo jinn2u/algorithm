@@ -1,6 +1,6 @@
 const fs = require("fs");
 let [N, money] = fs
-  .readFileSync("./data")
+  .readFileSync("/dev/stdin")
   .toString()
   .split(" ")
   .map((el) => +el);
@@ -14,11 +14,10 @@ for (let i = 0; i < N; i++) {
   res.push("A");
   money -= 1;
 }
-while (money > 0) {
-  const idx = res.findIndex((el) => el === "A");
+for (let i = N - 1; i >= 0 && money > 0; i -= 1) {
   const plus = Math.min(money, 25);
-  res[idx] = String.fromCharCode(plus + 65);
+  res[i] = String.fromCharCode(plus + 65);
   money -= plus;
 }
-res.sort();
+
 console.log(res.join(""));
