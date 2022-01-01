@@ -88,6 +88,9 @@ class PriorityQueue extends Heap {
   isEmpty = () => this.heap.length <= 0;
 }
 const test = new PriorityQueue();
-test.enqueue(2, 2);
-test.enqueue(1, 1);
+test.enqueue(6, 1);
+test.enqueue(7, 1);
+test.enqueue(2, 3);
+test.enqueue(1, 3);
+test.enqueue(4, 2);
 console.log();
