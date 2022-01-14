@@ -1,12 +1,21 @@
 function solution(numbers) {
-  let result = "";
-  const tmp = numbers.map((number, index) => {
-    let tmp = number.toString();
-    return [tmp.padEnd(4, tmp.slice(0, 4 - tmp.length)), index];
+  const newNumbers = numbers.sort((a, b) => {
+    a = a + "";
+    b = b + "";
+    if (+a[0] < +b[0]) {
+      return 1;
+    }
+    if (+a[0] > +b[0]) {
+      return -1;
+    }
+    if (+a[0] === +b[0]) {
+      if (+(a + b) > +(b + a)) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
   });
-  tmp.sort((a, b) => Number(b[0]) - Number(a[0]));
-  tmp.forEach((arr) => (result += numbers[arr[1]].toString()));
-  return result.replace(/0/g, "").length > 0 ? result : "0";
+  const ans = newNumbers.join("");
+  return +ans === 0 ? "0" : ans;
 }
-
-console.log(solution([0, 0, 0]));
