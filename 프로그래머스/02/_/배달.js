@@ -1,25 +1,29 @@
 function solution(N, road, k) {
-  const arr = new Array(N + 1).fill(Infinity);
-  const weights = Array.from({ length: N + 1 }, () => []);
+  const weights = new Array(N + 1).fill(Infinity);
+  const arr = Array.from({ length: N + 1 }, () => []);
 
-  for (const [to, from, weight] of road) {
-    weights[to].push({ to: from, time: weight });
-    weights[from].push({ to, time: weight });
+  for (let i = 0; i < road.length; i += 1) {
+    const [from, to, weight] = road[i];
+    arr[from].push({ to: to, weight: weight });
+    arr[to].push({ to: from, weight: weight });
   }
-  const pq = [{ to: 1, time: 0 }];
-  arr[1] = 0;
-  while (pq.length) {
-    let { to, time } = pq.pop();
-    for (const next of weights[to]) {
-      if (arr[next.to] > arr[to] + next.time) {
-        arr[next.to] = arr[to] + next.time;
-        pq.push(next);
+
+  const queue = [{ to: 1, weight: 0 }];
+  weights[1] = 0;
+
+  while (queue.length) {
+    const { to, weight } = queue.pop();
+
+    for (let i = 0; i < arr[to].length; i += 1) {
+      const next = arr[to][i];
+      if (weights[next.to] > weights[to] + next.weight) {
+        weights[next.to] = weights[to] + next.weight;
+        queue.push(next);
       }
     }
   }
-  return arr.filter((item) => item <= k).length;
+  return weights.filter((weight) => weight <= k).length;
 }
-
 console.log(
   solution(
     5,
